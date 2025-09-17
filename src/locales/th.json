@@ -1,0 +1,114 @@
+{
+  "header": {
+    "home": "หน้าแรก",
+    "manage_trip": "จัดการทริป",
+    "contact_us": "ติดต่อเรา",
+    "travel_guide": "ไกด์ท่องเที่ยว",
+    "signin": "เข้าสู่ระบบ"
+  },
+  "signin": {
+    "title": "ยินดีต้อนรับกลับ",
+    "subtitle": "ลงชื่อเข้าใช้เพื่อเข้าถึงบัญชีของคุณ",
+    "email_label": "อีเมล",
+    "email_placeholder": "อีเมล",
+    "password_label": "รหัสผ่าน",
+    "password_placeholder": "รหัสผ่าน",
+    "submit": "เข้าสู่ระบบ",
+    "forgot": "ลืมรหัสผ่าน?",
+    "no_account": "ยังไม่มีบัญชีใช่ไหม? ",
+    "signup_link": "สมัครสมาชิก"
+  },
+  "signup": {
+    "hero": {
+      "title": "เริ่มต้นการผจญภัยของคุณ",
+      "subtitle": "สมัครสมาชิกกับ RVnCamp และสำรวจสถานที่ท่องเที่ยวสุดพิเศษ",
+      "badge_ready": "พร้อมให้บริการ",
+      "image_alt": "รถบ้านสำหรับการเดินทาง"
+    },
+    "title": "สมัครสมาชิก",
+    "subtitle": "สร้างบัญชีเพื่อเริ่มจองแคมปิ้งกับเรา",
+    "full_name_label": "ชื่อ-นามสกุล",
+    "full_name_placeholder": "กรอกชื่อและนามสกุล",
+    "email_label": "อีเมล",
+    "email_placeholder": "example@email.com",
+    "phone_label": "หมายเลขโทรศัพท์",
+    "phone_placeholder": "081-234-5678",
+    "password_label": "รหัสผ่าน",
+    "password_placeholder": "สร้างรหัสผ่าน",
+    "confirm_password_label": "ยืนยันรหัสผ่าน",
+    "confirm_password_placeholder": "ยืนยันรหัสผ่านอีกครั้ง",
+    "agree_prefix": "ฉันยอมรับ",
+    "terms": "ข้อกำหนดการใช้งาน",
+    "and": "และ",
+    "privacy": "นโยบายความเป็นส่วนตัว",
+    "submit": "สมัครสมาชิก",
+    "have_account": "มีบัญชีอยู่แล้ว?",
+    "login_link": "เข้าสู่ระบบ",
+    "or": "หรือ",
+    "social": {
+      "google": "Google",
+      "facebook": "Facebook"
+    },
+    "toast": {
+      "error_title": "ข้อผิดพลาด",
+      "password_mismatch": "รหัสผ่านไม่ตรงกัน",
+      "terms_required": "กรุณายอมรับข้อกำหนดและเงื่อนไข",
+      "success_title": "สำเร็จ!",
+      "success_desc": "สมัครสมาชิกเรียบร้อยแล้ว!"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "ติดต่อเรา",
+      "subtitle": "เราพร้อมช่วยเหลือคุณ! สอบถามข้อมูล การจอง หรือขอความช่วยเหลือได้ทุกเรื่อง"
+    },
+    "company": {
+      "title": "ข้อมูลบริษัท",
+      "name": "ที.เค.ดี. ไฟเบอร์ จำกัด",
+      "address_lines": ["888 ถนนหลวงแพ่ง", "กรุงเทพฯ 10520 ประเทศไทย"],
+      "email_label": "อีเมล",
+      "email": "rvncamp@carryboy.com",
+      "phone_label": "โทร",
+      "phone": "063 891 6161",
+      "hours_label": "เวลาทำการ",
+      "hours_value": "วันจันทร์–ศุกร์ 09:00–18:00 น. (GMT+7)",
+      "website_label": "เว็บไซต์",
+      "website": "www.rvncamp.com",
+      "qr_alt": "คิวอาร์โค้ดติดต่อบริษัท"
+    },
+    "form": {
+      "title": "ส่งข้อความถึงเรา",
+      "fields": {
+        "full_name": { "label": "ชื่อ–นามสกุล*", "placeholder": "สมชาย ใจดี" },
+        "email": { "label": "อีเมล*", "placeholder": "john@example.com" },
+        "phone": { "label": "เบอร์โทรศัพท์", "placeholder": "+66 XX XXX XXXX" },
+        "subject": { "label": "หัวข้อ*", "placeholder": "เลือกหัวข้อ" },
+        "message": {
+          "label": "ข้อความ*",
+          "placeholder": "พิมพ์ข้อความของคุณที่นี่..."
+        }
+      },
+      "subjects": {
+        "general": "สอบถามทั่วไป",
+        "booking": "ปัญหาการจอง",
+        "partnership": "เป็นพันธมิตรทางธุรกิจ",
+        "feedback": "ข้อเสนอแนะ / ร้องเรียน",
+        "other": "อื่น ๆ"
+      },
+      "submit": "ส่งข้อความ",
+      "validation": {
+        "required": "จำเป็นต้องกรอกข้อมูล",
+        "email": "กรุณากรอกอีเมลให้ถูกต้อง"
+      },
+      "toast": {
+        "success_title": "ส่งข้อความเรียบร้อย",
+        "success_desc": "ขอบคุณค่ะ/ครับ เราจะติดต่อกลับโดยเร็วที่สุด",
+        "error_title": "ส่งไม่สำเร็จ",
+        "error_desc": "กรุณาลองใหม่อีกครั้งภายหลัง"
+      }
+    },
+    "location": {
+      "title": "ที่ตั้งของเรา"
+    }
+  }
+}

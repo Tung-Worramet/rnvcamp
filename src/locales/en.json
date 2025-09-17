@@ -1,0 +1,117 @@
+{
+  "header": {
+    "home": "Home",
+    "manage_trip": "Manage Your Trip",
+    "contact_us": "Contact Us",
+    "travel_guide": "Travel Guide",
+    "signin": "Sign In",
+    "signout": "Sign Out"
+  },
+  "signin": {
+    "title": "Welcome Back",
+    "subtitle": "Sign in to access your account",
+    "email_placeholder": "Email",
+    "password_placeholder": "Password",
+    "submit": "Sign In",
+    "forgot": "Forgot password?",
+    "no_account": "Don't have an account? ",
+    "signup_link": "Sign up"
+  },
+  "signup": {
+    "hero": {
+      "title": "Start your adventure",
+      "subtitle": "Join RVnCamp and explore exclusive destinations",
+      "badge_ready": "Available now",
+      "image_alt": "Campervan adventure"
+    },
+    "title": "Create account",
+    "subtitle": "Create an account to start booking with us",
+    "full_name_label": "Full name",
+    "full_name_placeholder": "Enter your full name",
+    "email_label": "Email",
+    "email_placeholder": "example@email.com",
+    "phone_label": "Phone number",
+    "phone_placeholder": "081-234-5678",
+    "password_label": "Password",
+    "password_placeholder": "Create a password",
+    "confirm_password_label": "Confirm password",
+    "confirm_password_placeholder": "Confirm your password",
+    "agree_prefix": "I accept ",
+    "terms": "Terms of Service",
+    "and": " and ",
+    "privacy": "Privacy Policy",
+    "submit": "Sign Up",
+    "have_account": "Already have an account?",
+    "login_link": "Log in",
+    "or": "or",
+    "social": {
+      "google": "Google",
+      "facebook": "Facebook"
+    },
+    "toast": {
+      "error_title": "Error",
+      "password_mismatch": "Passwords do not match",
+      "terms_required": "Please accept the terms and conditions",
+      "success_title": "Success!",
+      "success_desc": "Your account has been created."
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Get in Touch with Us",
+      "subtitle": "We're here to help! Contact us for inquiries, bookings, or any assistance."
+    },
+    "company": {
+      "title": "Company Information",
+      "name": "T.k.d. Fiber Co., Ltd.",
+      "address_lines": ["888, Luangphaeng rd.", "Bangkok, 10520 Thailand"],
+      "email_label": "Email",
+      "email": "rvncamp@carryboy.com",
+      "phone_label": "Phone",
+      "phone": "063 891 6161",
+      "hours_label": "Business hours",
+      "hours_value": "Monday – Friday: 9:00 AM – 6:00 PM (GMT+7)",
+      "website_label": "Website",
+      "website": "www.rvncamp.com",
+      "qr_alt": "Company contact QR code"
+    },
+    "form": {
+      "title": "Send Us a Message",
+      "fields": {
+        "full_name": { "label": "Full Name*", "placeholder": "John Doe" },
+        "email": {
+          "label": "Email Address*",
+          "placeholder": "john@example.com"
+        },
+        "phone": { "label": "Phone Number", "placeholder": "+66 XX XXX XXXX" },
+        "subject": { "label": "Subject*", "placeholder": "Select a subject" },
+        "message": {
+          "label": "Message*",
+          "placeholder": "Type your message here..."
+        }
+      },
+      "subjects": {
+        "general": "General inquiry",
+        "booking": "Booking support",
+        "partnership": "Partnership",
+        "feedback": "Feedback / Complaint",
+        "other": "Other"
+      },
+      "submit": "Send Message",
+      "signin_first": "Sign In",
+      "validation": {
+        "required": "This field is required",
+        "email": "Please enter a valid email address"
+      },
+      "toast": {
+        "success_title": "Message sent",
+        "success_desc": "Thank you! We will get back to you shortly.",
+        "error_title": "Failed to send",
+        "error_desc": "Please try again later."
+      }
+    },
+    "location": {
+      "title": "Find Us Here"
+    }
+  }
+}
