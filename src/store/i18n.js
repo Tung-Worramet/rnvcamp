@@ -20,16 +20,16 @@ const interpolate = (str, vars) =>
 export const useI18n = create(
   persist(
     (set, get) => ({
-      lang: "th",
+      lang: "en",
       dict: {},
       fallbackDict: {},
       ready: false,
 
       init: async () => {
         const langFromStorage =
-          get().lang || (navigator.language || "").startsWith("th")
-            ? "th"
-            : "en";
+          get().lang || (navigator.language || "").startsWith("en")
+            ? "en"
+            : "th";
         await get().setLang(langFromStorage);
       },
 

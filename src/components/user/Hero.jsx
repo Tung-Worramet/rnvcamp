@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Search,
   MapPin,
@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { getCampType, getPickupPoint, getVehicleType } from "@/api/home";
 
 const Hero = () => {
   const [activeTab, setActiveTab] = useState("motorhome");
@@ -34,8 +35,38 @@ const Hero = () => {
   const [travelWithPets, setTravelWithPets] = useState(false);
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropoffLocation, setDropoffLocation] = useState("");
-  const [vehicleType, setVehicleType] = useState("");
+
+  const [vehicleTypes, setVehicleTypes] = useState([]);
+  const [selectedVehicleTypeId, setSelectedVehicleTypeId] = useState("");
+  const [pickupPoints, setPickupPoints] = useState([]);
+  const [selectedPickupPointId, setSelectedPickupPointId] = useState("");
+  const [campTypes, setCampTypes] = useState([]);
+  const [selectedCampTypeId, setSelectedCampTypeId] = useState("");
   const [driverAge, setDriverAge] = useState("");
+  const [selectedDriverAge, setSelectedDriverAge] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const vehicleType = await getVehicleType();
+        setVehicleTypes(vehicleType.data);
+        const pickup = await getPickupPoint();
+        setPickupPoints(pickup.data);
+        const camp = await getCampType();
+        setCampTypes(camp.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  // useEffect(() => {
+  //   console.log("vehicleTypes", vehicleTypes);
+  // }, [vehicleTypes]);
+  // console.log("selectedVehicleTypeId", selectedVehicleTypeId);
+  // console.log("selectedDriverAge", selectedDriverAge);
+  // console.log("selectedPickupPointId", selectedPickupPointId);
+  console.log("selectedCampTypeId", selectedCampTypeId);
 
   const popularDestinations = [
     "กรุงเทพฯ",
@@ -49,13 +80,13 @@ const Hero = () => {
     "จุดจอดรถบ้าน / คาราวาน",
     "บ้านพัก / โรงแรม",
   ];
-  const vehicleTypes = [
-    "Caravan",
-    "Motorhome A class",
-    "Motorhome B class",
-    "Motorhome C class",
-    "Campervan",
-  ];
+  // const vehicleTypes = [
+  //   "Caravan",
+  //   "Motorhome A class",
+  //   "Motorhome B class",
+  //   "Motorhome C class",
+  //   "Campervan",
+  // ];
   const ageRanges = ["18-24", "25-29", "30-60", "60+"];
 
   const tabs = [
@@ -121,11 +152,25 @@ const Hero = () => {
                     </label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <input
+                      {/* <input
                         type="text"
                         placeholder="เมืองเริ่ม เช่น ภูเก็ต เชียงใหม่..."
                         className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
+                      /> */}
+                      <select
+                        value={selectedPickupPointId}
+                        onChange={(e) =>
+                          setSelectedPickupPointId(e.target.value)
+                        }
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        <option value="">เลือกสถานที่รับรถ</option>
+                        {pickupPoints.map((value) => (
+                          <option key={value.id} value={value.id}>
+                            {value.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
 
@@ -215,19 +260,31 @@ const Hero = () => {
                   </label>
                   <div className="flex items-center gap-4">
                     <span>ประเภทรถที่เช่า</span>
-                    <select className="border rounded px-3 py-2">
-                      <option>Caravan</option>
-                      <option>Motorhome C class</option>
-                      <option>Camper</option>
-                      <option>Motorhome A class</option>
-                      <option>Motorhome B class</option>
-                      <option>Other vehicle</option>
+                    <select
+                      value={selectedVehicleTypeId}
+                      onChange={(e) => setSelectedVehicleTypeId(e.target.value)}
+                      className="border rounded px-3 py-2"
+                    >
+                      <option value="">เลือกประเภทรถ</option>
+                      {vehicleTypes.map((type) => (
+                        <option key={type.id} value={type.id}>
+                          {type.name}
+                        </option>
+                      ))}
                     </select>
+
                     <span>อายุผู้ขับขี่</span>
-                    <select className="border rounded px-3 py-2">
-                      <option>25-29</option>
-                      <option>30-60</option>
-                      <option>60+</option>
+                    <select
+                      value={selectedDriverAge}
+                      onChange={(e) => setSelectedDriverAge(e.target.value)}
+                      className="border rounded px-3 py-2"
+                    >
+                      <option value="">เลือกช่วงอายุ</option>
+                      {ageRanges.map((age) => (
+                        <option key={age} value={age}>
+                          {age}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -433,14 +490,16 @@ const Hero = () => {
                       </label>
                       <div className="relative">
                         <select
-                          value={accommodationType}
-                          onChange={(e) => setAccommodationType(e.target.value)}
+                          value={selectedCampTypeId}
+                          onChange={(e) =>
+                            setSelectedCampTypeId(e.target.value)
+                          }
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
                         >
                           <option value="">เลือกประเภท</option>
-                          {accommodationTypes.map((type) => (
-                            <option key={type} value={type}>
-                              {type}
+                          {campTypes.map((type) => (
+                            <option key={type.id} value={type.id}>
+                              {type.name}
                             </option>
                           ))}
                         </select>
@@ -643,14 +702,16 @@ const Hero = () => {
                       </label>
                       <div className="relative">
                         <select
-                          value={vehicleType}
-                          onChange={(e) => setVehicleType(e.target.value)}
+                          value={selectedVehicleTypeId}
+                          onChange={(e) =>
+                            setSelectedVehicleTypeId(e.target.value)
+                          }
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
                         >
                           <option value="">เลือกประเภทรถ</option>
                           {vehicleTypes.map((type) => (
-                            <option key={type} value={type}>
-                              {type}
+                            <option key={type.id} value={type.id}>
+                              {type.name}
                             </option>
                           ))}
                         </select>
@@ -910,14 +971,14 @@ const Hero = () => {
                     <span>ประเภทที่พัก</span>
                     <div className="relative">
                       <select
-                        value={accommodationType}
-                        onChange={(e) => setAccommodationType(e.target.value)}
+                        value={selectedCampTypeId}
+                        onChange={(e) => setSelectedCampTypeId(e.target.value)}
                         className="border rounded px-3 py-2 pr-8 appearance-none"
                       >
                         <option value="">เลือกประเภท</option>
-                        {accommodationTypes.map((type) => (
-                          <option key={type} value={type}>
-                            {type}
+                        {campTypes.map((type) => (
+                          <option key={type.id} value={type.id}>
+                            {type.name}
                           </option>
                         ))}
                       </select>
