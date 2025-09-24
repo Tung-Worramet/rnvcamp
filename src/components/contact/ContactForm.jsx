@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -21,11 +21,22 @@ import { Textarea } from "@/components/ui/textarea";
 import { useI18n } from "@/store/i18n";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import { getMessageSubject } from "@/api/general";
+import { sendMessage } from "@/api/user";
 
 const ContactForm = ({ token, initialValues = {} }) => {
   const t = useI18n((s) => s.t);
   useI18n((s) => s.lang);
   const { toast } = useToast();
+
+  const [messageSubjects, setMessageSubjects] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const res = await getMessageSubject();
+      setMessageSubjects(res.data);
+    })();
+  }, []);
 
   // 1) ตั้งค่า defaultValues จาก props
   const form = useForm({
@@ -34,6 +45,7 @@ const ContactForm = ({ token, initialValues = {} }) => {
       fullName: initialValues.fullName || "",
       email: initialValues.email || "",
       phone: initialValues.phone || "",
+      userId: initialValues.userId || "",
       subject: "",
       message: "",
     },
@@ -49,12 +61,21 @@ const ContactForm = ({ token, initialValues = {} }) => {
     }));
   }, [initialValues, form]);
 
-  const onSubmit = (data) => {
-    console.log("contact form:", data);
-    toast({
-      title: t("contact.form.toast.success_title"),
-      description: t("contact.form.toast.success_desc"),
-    });
+  const onSubmit = async (data) => {
+    try {
+      const newForm = {
+        userId: data.userId,
+        subjectId: parseInt(data.subjectId),
+        message: data.message,
+      };
+
+      await sendMessage(token, newForm);
+
+      toast({
+        title: t("contact.form.toast.success_title"),
+        description: t("contact.form.toast.success_desc"),
+      });
+    } catch (error) {}
   };
 
   return (
@@ -131,12 +152,15 @@ const ContactForm = ({ token, initialValues = {} }) => {
           {/* Subject */}
           <FormField
             control={form.control}
-            name="subject"
+            name="subjectId"
             rules={{ required: t("contact.form.validation.required") }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("contact.form.fields.subject.label")}</FormLabel>
-                <Select onValueChange={field.onChange} value={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value ?? ""} // ให้เป็น string เสมอ
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue
@@ -147,21 +171,14 @@ const ContactForm = ({ token, initialValues = {} }) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="bg-white">
-                    <SelectItem value="general">
-                      {t("contact.form.subjects.general")}
-                    </SelectItem>
-                    <SelectItem value="booking">
-                      {t("contact.form.subjects.booking")}
-                    </SelectItem>
-                    <SelectItem value="partnership">
-                      {t("contact.form.subjects.partnership")}
-                    </SelectItem>
-                    <SelectItem value="feedback">
-                      {t("contact.form.subjects.feedback")}
-                    </SelectItem>
-                    <SelectItem value="other">
-                      {t("contact.form.subjects.other")}
-                    </SelectItem>
+                    {messageSubjects.map((subject) => (
+                      <SelectItem
+                        key={subject.id}
+                        value={String(subject.id)} // <-- บังคับเป็น string
+                      >
+                        {subject.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />

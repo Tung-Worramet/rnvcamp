@@ -8,8 +8,8 @@ import {
   Shield,
   Info,
 } from "lucide-react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 const Footer = () => {
   const handleSubscribe = (e) => {

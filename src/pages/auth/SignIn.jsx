@@ -30,9 +30,21 @@ const SignIn = () => {
     e.preventDefault();
 
     try {
-      await actionLogin(form);
-      // navigate(-1, { replace: true });
-      // toast({ title: "สําเร็จ!", description: "เข้าสู่ระบบเรียบร้อยแล้ว!" });
+      const res = await actionLogin(form);
+      if (res.data.success === false) {
+        toast({
+          title: "ข้อผิดพลาด",
+          description: res.data.message,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "สําเร็จ",
+        description: "SingIn Success",
+        // variant: "success",
+      });
       navigate("/");
     } catch (error) {
       // toast({

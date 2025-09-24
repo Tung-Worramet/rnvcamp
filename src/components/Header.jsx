@@ -1,24 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, Globe, LogOut } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "./ui/button";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet";
+} from "./ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "./ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 
 // ใช้ Zustand i18n store ที่สร้างไว้
 import { useI18n } from "@/store/i18n";
 import useAuthStore from "@/store/authStore";
+import { useEffect } from "react";
 
 const Header = () => {
   const t = useI18n((s) => s.t);
@@ -29,16 +30,20 @@ const Header = () => {
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
 
+  const navigate = useNavigate();
+
+  useEffect(() => {}, [token, user]);
+
   const { toast } = useToast();
 
-  const name = user?.email.trim()[0].toUpperCase();
+  const name = user?.email.charAt(0).toUpperCase();
 
   const handleSignOut = async () => {
     try {
       await logout();
-      // toast({ title: "test" });
       navigate("/signin");
-    } catch {
+      // toast({ title: "test" });
+    } catch (error) {
       // toast({
       //   title: t("common.error") || "Error",
       //   description: t("header.signout_failed") || "Sign out failed",
@@ -105,40 +110,41 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link to="/signin">
-              {token ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    {/* ปุ่มวงกลมแสดงตัวอักษรแรก */}
-                    <Button
-                      variant="secondary"
-                      size="icon"
-                      className="w-9 h-9 rounded-full font-semibold"
-                      aria-label="User menu"
-                    >
-                      {name}
-                    </Button>
-                  </DropdownMenuTrigger>
-
-                  <DropdownMenuContent
-                    align="end"
-                    className="w-30 bg-white mt-2.5"
+            {token ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  {/* ปุ่มวงกลมแสดงตัวอักษรแรก */}
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className="w-9 h-9 rounded-full font-semibold"
+                    aria-label="User menu"
                   >
-                    <DropdownMenuItem
-                      onClick={handleSignOut}
-                      className="text-red-600 focus:text-red-600"
-                    >
-                      <LogOut className="h-4 w-4 mr-2" />
-                      {t("header.signout")}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <Button variant="default" size="sm">
-                  {t("header.signin")}
-                </Button>
-              )}
-            </Link>
+                    {name}
+                  </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent
+                  align="end"
+                  className="w-30 bg-white mt-2.5"
+                >
+                  <DropdownMenuItem asChild>
+                    <Link to="/user">{t("header.manage")}</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={handleSignOut}
+                    className="text-red-600 focus:text-red-600"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    {t("header.signout")}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button variant="default" size="sm">
+                <Link to="/signin">{t("header.signin")}</Link>
+              </Button>
+            )}
           </div>
         </nav>
 

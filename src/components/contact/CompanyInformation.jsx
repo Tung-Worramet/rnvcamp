@@ -1,4 +1,4 @@
-import { getInfo } from "@/api/contact";
+import { getInfo } from "@/api/general";
 import { useI18n } from "@/store/i18n";
 import { MapPin, Mail, Phone, Clock } from "lucide-react";
 import { useState, useEffect } from "react";

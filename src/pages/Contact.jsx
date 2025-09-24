@@ -11,9 +11,11 @@ const Contact = () => {
 
   const token = useAuthStore((s) => s.token);
   const user = useAuthStore((s) => s.user);
+
   // ส่งเฉพาะฟิลด์ที่ฟอร์มต้องใช้ (กัน coupling)
   const initialValues = useMemo(
     () => ({
+      userId: user?.id,
       fullName: user?.fullname || "",
       email: user?.email || "",
       phone: user?.tel || "",

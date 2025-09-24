@@ -5,7 +5,8 @@
     "contact_us": "Contact Us",
     "travel_guide": "Travel Guide",
     "signin": "Sign In",
-    "signout": "Sign Out"
+    "signout": "Sign Out",
+    "manage": "Manage"
   },
   "signin": {
     "title": "Welcome Back",

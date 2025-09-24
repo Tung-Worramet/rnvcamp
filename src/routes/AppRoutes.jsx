@@ -1,23 +1,44 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LayoutUser from "../layouts/LayoutUser";
+
 import SignIn from "@/pages/auth/SignIn";
 import SignUp from "@/pages/auth/SignUp";
 import Contact from "@/pages/Contact";
 import ManageTrip from "@/pages/ManageTrip";
 import Home from "@/pages/Home";
+import Campervan from "@/pages/managetrip/Campervan";
+import Layout from "@/layouts/Layout";
+import LayoutUser from "@/layouts/LayoutUser";
+import Account from "@/pages/user/Account";
+import ProtectRouteUser from "./ProtectRouteUser";
+import Plans from "@/pages/user/Plans";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LayoutUser />,
+    element: <Layout />,
     children: [
       { index: true, element: <Home /> },
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
       { path: "manage-trip", element: <ManageTrip /> },
       { path: "contact", element: <Contact /> },
+      { path: "campervan", element: <Campervan /> },
     ],
     // children: [{ index: true, element: <Login /> }],
+  },
+  {
+    path: "/user",
+    element: <ProtectRouteUser element={<LayoutUser />} />,
+    children: [
+      {
+        index: true,
+        element: <Plans />,
+      },
+      {
+        path: "account",
+        element: <Account />,
+      },
+    ],
   },
   {
     path: "/admin",

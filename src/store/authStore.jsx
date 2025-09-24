@@ -21,6 +21,7 @@ const authStore = (set, get) => ({
 
     return res;
   },
+  setUser: (user) => set({ user }),
 });
 
 const usePersist = {

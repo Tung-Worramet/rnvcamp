@@ -18,9 +18,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { format } from "date-fns";
+import { format, startOfDay, startOfToday, isAfter, addDays } from "date-fns";
 import { cn } from "@/lib/utils";
-import { getCampType, getPickupPoint, getVehicleType } from "@/api/home";
+import { getVehicleType } from "@/api/vehicle";
+import { createSearchParams, useNavigate } from "react-router-dom";
+import { getPickupPoint } from "@/api/booking";
+import { getCampType } from "@/api/campsite";
 
 const Hero = () => {
   const [activeTab, setActiveTab] = useState("motorhome");
@@ -44,6 +47,11 @@ const Hero = () => {
   const [selectedCampTypeId, setSelectedCampTypeId] = useState("");
   const [driverAge, setDriverAge] = useState("");
   const [selectedDriverAge, setSelectedDriverAge] = useState("");
+  const [pickupDate, setPickupDate] = useState();
+  const [pickupTime, setPickupTime] = useState();
+  const [returnDate, setReturnDate] = useState();
+  const [returnTime, setReturnTime] = useState();
+  const [vehicleList, setVehicleList] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -66,7 +74,13 @@ const Hero = () => {
   // console.log("selectedVehicleTypeId", selectedVehicleTypeId);
   // console.log("selectedDriverAge", selectedDriverAge);
   // console.log("selectedPickupPointId", selectedPickupPointId);
-  console.log("selectedCampTypeId", selectedCampTypeId);
+  // console.log("selectedCampTypeId", selectedCampTypeId);
+  // console.log("pickupDate", pickupDate);
+  // console.log("returnDate", returnDate);
+
+  // console.log("changeFormatDate Pickup", changeFormatDate(pickupDate));
+  // console.log("pickupTime", pickupTime);
+  // console.log("re", returnTime);
 
   const popularDestinations = [
     "กรุงเทพฯ",
@@ -75,18 +89,18 @@ const Hero = () => {
     "ภูเก็ต",
     "พัทยา",
   ];
-  const accommodationTypes = [
-    "ลานกางเต็นท์/แคมป์ไซต์",
-    "จุดจอดรถบ้าน / คาราวาน",
-    "บ้านพัก / โรงแรม",
+
+  const timeRanges = [
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
   ];
-  // const vehicleTypes = [
-  //   "Caravan",
-  //   "Motorhome A class",
-  //   "Motorhome B class",
-  //   "Motorhome C class",
-  //   "Campervan",
-  // ];
+
   const ageRanges = ["18-24", "25-29", "30-60", "60+"];
 
   const tabs = [
@@ -94,6 +108,36 @@ const Hero = () => {
     { id: "campsite", label: "แคมป์ไซต์", icon: Map },
     { id: "package", label: "เช่ารถบ้าน + แคมป์ไซต์", icon: Plus },
   ];
+
+  const navigate = useNavigate();
+
+  const cut = (s, n = 40) => (s?.length > n ? s.slice(0, n - 1) + "…" : s);
+  const changeFormatDate = (date) => format(date, "MM/dd/yyyy");
+
+  useEffect(() => {
+    if (
+      pickupDate &&
+      returnDate &&
+      !isAfter(startOfDay(returnDate), startOfDay(pickupDate))
+    ) {
+      setReturnDate(addDays(startOfDay(pickupDate), 1));
+    }
+  }, [pickupDate, returnDate]);
+
+  const handleSearchCampervan = async () => {
+    const fromDate = changeFormatDate(pickupDate);
+    const toDate = changeFormatDate(returnDate);
+    // const res = await getVehicleList(fromDate, toDate);
+    // setVehicleList(res.data);
+    navigate({
+      pathname: "/campervan",
+      search: createSearchParams({
+        from: fromDate,
+        to: toDate,
+      }).toString(),
+    });
+  };
+  // console.log("vehicleList", vehicleList);
 
   return (
     <div className="relative min-h-[70vh] flex flex-col justify-center overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800">
@@ -152,11 +196,6 @@ const Hero = () => {
                     </label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      {/* <input
-                        type="text"
-                        placeholder="เมืองเริ่ม เช่น ภูเก็ต เชียงใหม่..."
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      /> */}
                       <select
                         value={selectedPickupPointId}
                         onChange={(e) =>
@@ -166,8 +205,12 @@ const Hero = () => {
                       >
                         <option value="">เลือกสถานที่รับรถ</option>
                         {pickupPoints.map((value) => (
-                          <option key={value.id} value={value.id}>
-                            {value.name}
+                          <option
+                            key={value.id}
+                            value={value.id}
+                            className="truncate"
+                          >
+                            {cut(value.name, 25)}
                           </option>
                         ))}
                       </select>
@@ -180,26 +223,47 @@ const Hero = () => {
                       วันที่รับ
                     </label>
                     <div className="flex gap-2">
-                      <div className="relative flex-1">
-                        <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          placeholder="พ. 16 ก.ค."
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                      </div>
-                      <select className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        {[
-                          "10:00",
-                          "11:00",
-                          "12:00",
-                          "13:00",
-                          "14:00",
-                          "15:00",
-                          "16:00",
-                          "17:00",
-                        ].map((t) => (
-                          <option key={t}>{t}</option>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "relative w-full justify-start text-left font-normal border-gray-300 h-[52px] truncate"
+                            )}
+                          >
+                            <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                            <span className="pl-6">
+                              {pickupDate
+                                ? format(pickupDate, "dd MMM yyyy")
+                                : "PickupDate"}
+                            </span>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent
+                          className="w-auto p-0 bg-white z-50"
+                          align="start"
+                        >
+                          <Calendar
+                            mode="single"
+                            selected={pickupDate ?? undefined}
+                            onSelect={(d) =>
+                              setPickupDate(d ? startOfDay(d) : null)
+                            }
+                            disabled={{ before: startOfToday() }}
+                            fromDate={startOfToday()}
+                          />
+                        </PopoverContent>
+                      </Popover>
+
+                      <select
+                        onChange={(e) => setPickupTime(e.target.value)}
+                        className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="" className="hidden"></option>
+                        {timeRanges.map((t) => (
+                          <option key={t} value={t}>
+                            {t}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -211,26 +275,57 @@ const Hero = () => {
                       วันที่คืน
                     </label>
                     <div className="flex gap-2">
-                      <div className="relative flex-1">
-                        <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          placeholder="ส. 19 ก.ค."
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                      </div>
-                      <select className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        {[
-                          "10:00",
-                          "11:00",
-                          "12:00",
-                          "13:00",
-                          "14:00",
-                          "15:00",
-                          "16:00",
-                          "17:00",
-                        ].map((t) => (
-                          <option key={t}>{t}</option>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "relative w-full justify-start text-left font-normal border-gray-300 h-[52px] truncate"
+                            )}
+                          >
+                            <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                            <span className="pl-6">
+                              {returnDate
+                                ? format(returnDate, "dd MMM yyyy")
+                                : "ReturnDate"}
+                            </span>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent
+                          className="w-auto p-0 bg-white z-50"
+                          align="start"
+                        >
+                          <Calendar
+                            mode="single"
+                            selected={returnDate ?? undefined}
+                            onSelect={(d) =>
+                              setReturnDate(d ? startOfDay(d) : null)
+                            }
+                            disabled={(d) => {
+                              const day = startOfDay(d);
+                              const min = pickupDate
+                                ? startOfDay(pickupDate)
+                                : startOfToday();
+                              return !isAfter(day, min); // ← disable ทั้ง “ก่อน” และ “เท่ากับ” วันรับ
+                            }}
+                            fromDate={
+                              pickupDate
+                                ? addDays(startOfDay(pickupDate), 1)
+                                : startOfToday()
+                            } // เริ่มแสดงตั้งแต่วันถัดไป
+                          />
+                        </PopoverContent>
+                      </Popover>
+
+                      <select
+                        onChange={(e) => setReturnTime(e.target.value)}
+                        className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="" className="hidden"></option>
+                        {timeRanges.map((t) => (
+                          <option key={t} value={t}>
+                            {t}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -238,13 +333,7 @@ const Hero = () => {
 
                   {/* Search Button */}
                   <button
-                    onClick={() =>
-                      window.open(
-                        "https://preview--camp-vista-filters-25.lovable.app/",
-                        "_blank",
-                        "noopener"
-                      )
-                    }
+                    onClick={handleSearchCampervan}
                     className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors flex items-center justify-center gap-2"
                   >
                     <Search className="w-5 h-5" />

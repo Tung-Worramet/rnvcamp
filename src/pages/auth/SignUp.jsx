@@ -55,30 +55,37 @@ const SignUp = () => {
     e.preventDefault();
 
     if (form.password !== form.confirmPassword) {
-      // toast({
-      //   title: "ข้อผิดพลาด",
-      //   description: "รหัสผ่านไม่ตรงกัน",
-      //   // variant: "destructive",
-      // });
+      toast({
+        title: "ข้อผิดพลาด",
+        description: "รหัสผ่านไม่ตรงกัน",
+        variant: "destructive",
+      });
       return;
     }
 
     if (!form.agreeToTerms) {
-      // toast({
-      //   title: "ข้อผิดพลาด",
-      //   description: "กรุณายอมรับข้อกำหนดและเงื่อนไข",
-      //   // variant: "destructive",
-      // });
+      toast({
+        title: "ข้อผิดพลาด",
+        description: "กรุณายอมรับข้อกำหนดและเงื่อนไข",
+        variant: "destructive",
+      });
       return;
     }
 
     try {
       const res = await register(form);
-      console.log(res);
-      // toast({
-      //   title: "สำเร็จ!",
-      //   description: "สมัครสมาชิกเรียบร้อยแล้ว!",
-      // });
+      if (res.data.success === false) {
+        toast({
+          title: "ข้อผิดพลาด",
+          description: res.data.message,
+          variant: "destructive",
+        });
+        return;
+      }
+      toast({
+        title: "สำเร็จ!",
+        description: "สมัครสมาชิกเรียบร้อยแล้ว!",
+      });
       navigate("/signin");
     } catch (error) {}
   };

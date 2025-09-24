@@ -9,3 +9,10 @@ export const getInfo = async (token) => {
   );
   return res.data ?? "Error";
 };
+
+export const getMessageSubject = async () => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_API_URL}/general/getmessagesubjectlist`
+  );
+  return res.data;
+};
