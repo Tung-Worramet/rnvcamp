@@ -36,7 +36,7 @@ const Header = () => {
 
   const { toast } = useToast();
 
-  const name = user?.email.charAt(0).toUpperCase();
+  const name = user?.Email.charAt(0).toUpperCase();
 
   const handleSignOut = async () => {
     try {

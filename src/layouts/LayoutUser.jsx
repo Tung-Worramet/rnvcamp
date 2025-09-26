@@ -1,6 +1,6 @@
 import HeaderUser from "@/components/user/HeaderUser";
 import SidebarUser from "@/components/user/SidebarUser";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import {
   Calendar,
   Car,
@@ -9,31 +9,75 @@ import {
   Gift,
   Settings,
   Bot,
-  Home,
 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const LayoutUser = () => {
-  const [activeTab, setActiveTab] = useState("plans");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
 
-  const menuItems = [
-    { id: "ai-plan", label: "วางแผนทริปด้วย AI", icon: Bot },
-    { id: "plans", label: "แผนของฉัน", icon: Calendar },
-    { id: "trip-detail", label: "รายละเอียดทริป", icon: MapPin },
-    { id: "rv-bookings", label: "การจองรถบ้าน", icon: Car },
-    { id: "camp-bookings", label: "การจองที่พัก", icon: MapPin },
-    { id: "payments", label: "การชำระเงิน", icon: CreditCard },
-    { id: "promotions", label: "โปรโมชันของฉัน", icon: Gift },
-    {
-      id: "account",
-      label: "ข้อมูลบัญชี",
-      icon: Settings,
-      path: "/user/account",
-    },
-  ];
+  const menuItems = useMemo(
+    () => [
+      {
+        id: "ai-plan",
+        label: "วางแผนทริปด้วย AI",
+        icon: Bot,
+        path: "/user/ai-plan",
+      },
+      { id: "plans", label: "แผนของฉัน", icon: Calendar, path: "/user" },
+      {
+        id: "trip-detail",
+        label: "รายละเอียดทริป",
+        icon: MapPin,
+        path: "/user/trip-detail",
+      },
+      {
+        id: "rv-bookings",
+        label: "การจองรถบ้าน",
+        icon: Car,
+        path: "/user/rv-bookings",
+      },
+      {
+        id: "camp-bookings",
+        label: "การจองที่พัก",
+        icon: MapPin,
+        path: "/user/camp-bookings",
+      },
+      {
+        id: "payments",
+        label: "การชำระเงิน",
+        icon: CreditCard,
+        path: "/user/payments",
+      },
+      {
+        id: "promotions",
+        label: "โปรโมชันของฉัน",
+        icon: Gift,
+        path: "/user/promotions",
+      },
+      {
+        id: "account",
+        label: "ข้อมูลบัญชี",
+        icon: Settings,
+        path: "/user/account",
+      },
+    ],
+    []
+  );
+
+  const activeItem = useMemo(() => {
+    const pathname = location.pathname;
+    const candidates = menuItems
+      .filter((m) => pathname === m.path || pathname.startsWith(m.path + "/"))
+      .sort((a, b) => b.path.length - a.path.length);
+
+    if (candidates.length > 0) return candidates[0];
+
+    return menuItems.find((m) => m.path === "/user") ?? menuItems[0];
+  }, [location.pathname, menuItems]);
 
   const handleLogout = () => {
+    // TODO: ใส่ logic ออกจากระบบจริง
     // window.location.href = "https://preview--rvn-camp.lovable.app/";
   };
 
@@ -43,15 +87,12 @@ const LayoutUser = () => {
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         items={menuItems}
-        activeId={activeTab}
-        onSelect={(id) => {
-          setActiveTab(id);
-          setSidebarOpen(false);
-        }}
+        currentPath={location.pathname}
+        activePath={activeItem?.path}
       />
       <main className="flex-1">
         <HeaderUser
-          title={menuItems.find((i) => i.id === activeTab)?.label || ""}
+          title={activeItem?.label || ""}
           onToggleSidebar={() => setSidebarOpen((v) => !v)}
           onLogout={handleLogout}
           notifCount={3}
@@ -64,4 +105,5 @@ const LayoutUser = () => {
     </div>
   );
 };
+
 export default LayoutUser;

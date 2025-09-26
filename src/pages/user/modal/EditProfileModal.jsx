@@ -39,7 +39,6 @@ const EditProfileModal = ({ open, onOpenChange, initial = {}, onSave }) => {
   }, [initial, reset, open]);
 
   const onSubmit = async (data) => {
-    console.log("data", data);
     await onSave?.(data);
     onOpenChange(false);
   };

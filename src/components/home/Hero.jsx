@@ -20,7 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { format, startOfDay, startOfToday, isAfter, addDays } from "date-fns";
 import { cn } from "@/lib/utils";
-import { getVehicleType } from "@/api/vehicle";
+import { getVehicleList, getVehicleType } from "@/api/vehicle";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { getPickupPoint } from "@/api/booking";
 import { getCampType } from "@/api/campsite";
@@ -127,15 +127,25 @@ const Hero = () => {
   const handleSearchCampervan = async () => {
     const fromDate = changeFormatDate(pickupDate);
     const toDate = changeFormatDate(returnDate);
-    // const res = await getVehicleList(fromDate, toDate);
-    // setVehicleList(res.data);
-    navigate({
-      pathname: "/campervan",
-      search: createSearchParams({
-        from: fromDate,
-        to: toDate,
-      }).toString(),
-    });
+    const res = await getVehicleList(fromDate, toDate);
+    console.log("res", res);
+
+    navigate(
+      {
+        pathname: "/campervan",
+        search: createSearchParams({
+          from: fromDate,
+          to: toDate,
+        }).toString(),
+      },
+      {
+        state: {
+          vehicles: res?.Data ?? [],
+          fromDate,
+          toDate,
+        },
+      }
+    );
   };
   // console.log("vehicleList", vehicleList);
 
@@ -206,11 +216,11 @@ const Hero = () => {
                         <option value="">เลือกสถานที่รับรถ</option>
                         {pickupPoints.map((value) => (
                           <option
-                            key={value.id}
-                            value={value.id}
+                            key={value.Id}
+                            value={value.Id}
                             className="truncate"
                           >
-                            {cut(value.name, 25)}
+                            {cut(value.Name, 25)}
                           </option>
                         ))}
                       </select>
@@ -356,7 +366,7 @@ const Hero = () => {
                     >
                       <option value="">เลือกประเภทรถ</option>
                       {vehicleTypes.map((type) => (
-                        <option key={type.id} value={type.id}>
+                        <option key={type.Id} value={type.Id}>
                           {type.name}
                         </option>
                       ))}

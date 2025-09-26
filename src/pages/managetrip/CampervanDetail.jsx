@@ -1,0 +1,42 @@
+import { getVehicleDetailById } from "@/api/vehicle";
+import VehicleSpecification from "@/components/campervan/VehicleSpecification";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Separator } from "@/components/ui/separator";
+import Dimension from "@/components/campervan/Dimension";
+import FloorPlan from "@/components/campervan/FloorPlan";
+import Amenities from "@/components/campervan/Amenities";
+
+const CampervanDetail = () => {
+  const { id } = useParams();
+
+  const [campervanData, setCampervanData] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const res = await getVehicleDetailById(id);
+      setCampervanData(res.data);
+    })();
+  }, [id]);
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-8">
+            <Separator />
+            <VehicleSpecification campervanData={campervanData} />
+            <Separator />
+            <Dimension campervanData={campervanData} />
+            <Separator />
+            <FloorPlan campervanData={campervanData} />
+            <Separator />
+            <Amenities campervanData={campervanData} />
+            <Separator />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default CampervanDetail;

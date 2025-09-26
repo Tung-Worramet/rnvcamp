@@ -91,7 +91,7 @@ const HeaderUser = ({
               <User className="h-4 w-4 text-white" />
             </div>
             <span className="font-medium text-slate-700 hidden sm:block">
-              {user?.fullname}
+              {user?.Fullname}
             </span>
           </div>
 

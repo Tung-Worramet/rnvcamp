@@ -173,8 +173,8 @@ const ContactForm = ({ token, initialValues = {} }) => {
                   <SelectContent className="bg-white">
                     {messageSubjects.map((subject) => (
                       <SelectItem
-                        key={subject.id}
-                        value={String(subject.id)} // <-- บังคับเป็น string
+                        key={subject.Id}
+                        value={String(subject.Id)} // <-- บังคับเป็น string
                       >
                         {subject.name}
                       </SelectItem>

@@ -14,3 +14,11 @@ export const getVehicleList = async (fromDate, toDate) => {
   );
   return res.data;
 };
+
+export const getVehicleDetailById = async (id) => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_API_URL}/vehicle/getvehicledetailbyid`,
+    { params: { id } }
+  );
+  return res.data;
+};
