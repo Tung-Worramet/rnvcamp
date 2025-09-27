@@ -12,6 +12,7 @@ import Account from "@/pages/user/Account";
 import ProtectRouteUser from "./ProtectRouteUser";
 import Plans from "@/pages/user/Plans";
 import CampervanDetail from "@/pages/managetrip/CampervanDetail";
+import Campsite from "@/pages/managetrip/Campsite";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       { path: "contact", element: <Contact /> },
       { path: "campervan", element: <Campervan /> },
       { path: "campervan/:id", element: <CampervanDetail /> },
+      { path: "campsite", element: <Campsite /> },
     ],
     // children: [{ index: true, element: <Login /> }],
   },

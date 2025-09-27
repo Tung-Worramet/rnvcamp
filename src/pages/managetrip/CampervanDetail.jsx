@@ -6,6 +6,8 @@ import { Separator } from "@/components/ui/separator";
 import Dimension from "@/components/campervan/Dimension";
 import FloorPlan from "@/components/campervan/FloorPlan";
 import Amenities from "@/components/campervan/Amenities";
+import HeroImageGallery from "@/components/campervan/HeroImageGallery";
+import TitleAndPrice from "@/components/campervan/TitleAndPrice";
 
 const CampervanDetail = () => {
   const { id } = useParams();
@@ -22,7 +24,9 @@ const CampervanDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <TitleAndPrice campervanData={campervanData} />
+        <HeroImageGallery campervanData={campervanData} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-[180px]">
           <div className="lg:col-span-2 space-y-8">
             <Separator />
             <VehicleSpecification campervanData={campervanData} />
@@ -32,7 +36,7 @@ const CampervanDetail = () => {
             <FloorPlan campervanData={campervanData} />
             <Separator />
             <Amenities campervanData={campervanData} />
-            <Separator />
+            {/* <Separator /> */}
           </div>
         </div>
       </div>

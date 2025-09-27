@@ -140,7 +140,29 @@ const Hero = () => {
       },
       {
         state: {
-          vehicles: res?.Data ?? [],
+          // vehicles: res?.Data ?? [],
+          fromDate,
+          toDate,
+        },
+      }
+    );
+  };
+
+  const handleSearchCampsite = async () => {
+    const fromDate = changeFormatDate(pickupDate);
+    const toDate = changeFormatDate(returnDate);
+    const res = await getCampList(fromDate, toDate);
+
+    navigate(
+      {
+        pathname: "/campsite",
+        search: createSearchParams({
+          from: fromDate,
+          to: toDate,
+        }).toString(),
+      },
+      {
+        state: {
           fromDate,
           toDate,
         },
@@ -844,16 +866,7 @@ const Hero = () => {
 
                 {/* Big Search */}
                 <div className="flex justify-center mt-6">
-                  <button
-                    onClick={() =>
-                      window.open(
-                        "https://preview--rvn-camp.lovable.app/book-motorhome",
-                        "_blank",
-                        "noopener"
-                      )
-                    }
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-lg transition-colors flex items-center justify-center gap-3 text-lg shadow-lg hover:shadow-xl"
-                  >
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-lg transition-colors flex items-center justify-center gap-3 text-lg shadow-lg hover:shadow-xl">
                     <Search className="w-6 h-6" />
                     <span>ค้นหา</span>
                   </button>
@@ -1050,13 +1063,7 @@ const Hero = () => {
 
                   {/* Search */}
                   <button
-                    onClick={() =>
-                      window.open(
-                        "https://preview--camp-vista-filters.lovable.app/",
-                        "_blank",
-                        "noopener"
-                      )
-                    }
+                    onClick={handleSearchCampsite}
                     className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors flex items-center justify-center gap-2"
                   >
                     <Search className="w-5 h-5" />

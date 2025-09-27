@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { getVehicleList } from "@/api/vehicle";
 import { Link } from "react-router-dom";
 import {
   MapPin,
@@ -20,39 +19,39 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { getCampList } from "@/api/campsite";
 
-const Campervan = () => {
+const Campsite = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const from = params.get("from");
   const to = params.get("to");
 
   const initial = location.state?.vehicles ?? [];
-  const [vehicles, setVehicles] = useState(initial);
+  const [campsites, setCampsites] = useState(initial);
   const [total, setTotal] = useState({});
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       if (from && to) {
-        await getVehicleList(from, to).then((res) => {
-          setVehicles(res.Data), setTotal(res);
+        await getCampList(from, to).then((res) => {
+          setCampsites(res.Data), setTotal(res);
         });
       } else {
-        await getVehicleList().then((res) => {
-          setVehicles(res.Data), setTotal(res);
+        await getCampList().then((res) => {
+          setCampsites(res.Data), setTotal(res);
         });
       }
     })();
   }, [from, to]);
-
+  console.log(campsites);
   return (
     <div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
-              {total.TotalCount} Vehicle type found
+              {total.TotalCount} Camping spots found
             </h2>
             {/* <select className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full sm:w-auto">
               <option>Sort by: Best Match</option>
@@ -65,8 +64,8 @@ const Campervan = () => {
 
         {/* Results Grid */}
         <div className="grid gap-6">
-          {vehicles.map((result) => (
-            <Link key={result?.Id} to={`/campervan/${result?.Id}`}>
+          {campsites.map((result) => (
+            <Link key={result?.Id} to={`/campsite/${result?.Id}`}>
               <Card className="hover:shadow-lg transition-shadow cursor-pointer">
                 <CardContent className="p-0">
                   <div className="flex flex-col md:flex-row">
@@ -145,4 +144,4 @@ const Campervan = () => {
     </div>
   );
 };
-export default Campervan;
+export default Campsite;
