@@ -35,11 +35,13 @@ const SidebarUser = ({
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-slate-200/50 bg-gradient-to-r from-blue-600 to-indigo-600">
-          <img
-            src="/lovable-uploads/3f3fbff9-a212-433a-883f-7d6b1a15af72.png"
-            alt="RVnCamp"
-            className="h-10 brightness-0 invert"
-          />
+          <a href="/">
+            <img
+              src="/images/logoSidebarUser.png"
+              alt="RVnCamp"
+              className="h-10 brightness-0 invert"
+            />
+          </a>
           <Button
             variant="ghost"
             size="sm"

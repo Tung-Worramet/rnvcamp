@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { register } from "./../api/auth";
 
 const Footer = () => {
   const handleSubscribe = (e) => {
@@ -99,13 +100,14 @@ const Footer = () => {
             </div>
             <ul className="space-y-3">
               <li>
-                <Button
-                  onClick={handlePartnerRegistration}
-                  variant="ghost"
-                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
-                >
-                  Partner Registration
-                </Button>
+                <a href="/partner-registration">
+                  <Button
+                    variant="ghost"
+                    className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
+                  >
+                    Partner Registration
+                  </Button>
+                </a>
               </li>
               <li>
                 <Button

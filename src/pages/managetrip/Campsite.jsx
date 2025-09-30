@@ -84,9 +84,7 @@ const Campsite = () => {
                           </h3>
                           <div className="flex items-center text-gray-600 mb-2">
                             <MapPin className="h-4 w-4 mr-1" />
-                            <span className="text-sm">
-                              {result?.PickuppointName}
-                            </span>
+                            <span className="text-sm">{result?.Address}</span>
                           </div>
                         </div>
                         <div className="flex sm:flex-col sm:text-right items-center sm:items-end gap-2">
@@ -95,8 +93,10 @@ const Campsite = () => {
                             <span className="text-sm font-medium">
                               {result?.rating}
                             </span>
-                          </div>
-                          <Badge variant="secondary">{result.type}</Badge> */}
+                          </div> */}
+                          <Badge variant="secondary">
+                            {result?.CamptypeName}
+                          </Badge>
                         </div>
                       </div>
 
@@ -119,12 +119,23 @@ const Campsite = () => {
                             Up to 4 guests
                           </span>
                         </div>
-                        <div className="flex items-center sm:block sm:text-right">
-                          <div className="text-xl sm:text-2xl font-bold text-gray-900 mr-2 sm:mr-0">
-                            ${result?.PriceBath}
+
+                        {result?.ZoneList.map((zone) => (
+                          <div className="flex items-center sm:block sm:text-right">
+                            {zone?.Name}
+                            <div className="text-xl sm:text-2xl font-bold text-gray-900 mr-2 sm:mr-0">
+                              ฿{zone?.Price}
+                            </div>
+                            <div className="text-sm text-gray-600">
+                              per night
+                            </div>
                           </div>
+                        ))}
+
+                        {/* <div className="flex items-center sm:block sm:text-right">
+                          <div className="text-xl sm:text-2xl font-bold text-gray-900 mr-2 sm:mr-0"></div>
                           <div className="text-sm text-gray-600">per night</div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>

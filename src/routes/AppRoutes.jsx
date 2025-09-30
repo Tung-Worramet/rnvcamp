@@ -13,6 +13,8 @@ import ProtectRouteUser from "./ProtectRouteUser";
 import Plans from "@/pages/user/Plans";
 import CampervanDetail from "@/pages/managetrip/CampervanDetail";
 import Campsite from "@/pages/managetrip/Campsite";
+import CampsiteDetail from "@/pages/managetrip/CampsiteDetail";
+import PartnerRegistration from "@/pages/partner/PartnerRegistration";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,8 @@ const router = createBrowserRouter([
       { path: "campervan", element: <Campervan /> },
       { path: "campervan/:id", element: <CampervanDetail /> },
       { path: "campsite", element: <Campsite /> },
+      { path: "campsite/:id", element: <CampsiteDetail /> },
+      { path: "partner-registration", element: <PartnerRegistration /> },
     ],
     // children: [{ index: true, element: <Login /> }],
   },

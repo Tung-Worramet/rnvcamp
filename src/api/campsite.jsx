@@ -14,3 +14,11 @@ export const getCampList = async (checkinDate, checkoutDate) => {
   );
   return res.data;
 };
+
+export const getCampDetailById = async (id) => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_API_URL}/campsite/getcampdetailbyid`,
+    { params: { id } }
+  );
+  return res.data;
+};
