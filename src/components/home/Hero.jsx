@@ -68,19 +68,9 @@ const Hero = () => {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("vehicleTypes", vehicleTypes);
-  // }, [vehicleTypes]);
-  // console.log("selectedVehicleTypeId", selectedVehicleTypeId);
-  // console.log("selectedDriverAge", selectedDriverAge);
-  // console.log("selectedPickupPointId", selectedPickupPointId);
-  // console.log("selectedCampTypeId", selectedCampTypeId);
-  // console.log("pickupDate", pickupDate);
-  // console.log("returnDate", returnDate);
-
-  // console.log("changeFormatDate Pickup", changeFormatDate(pickupDate));
-  // console.log("pickupTime", pickupTime);
-  // console.log("re", returnTime);
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+  };
 
   const popularDestinations = [
     "กรุงเทพฯ",
@@ -125,10 +115,13 @@ const Hero = () => {
   }, [pickupDate, returnDate]);
 
   const handleSearchCampervan = async () => {
+    if (!pickupDate || !returnDate) {
+      return;
+    }
+
     const fromDate = changeFormatDate(pickupDate);
     const toDate = changeFormatDate(returnDate);
     const res = await getVehicleList(fromDate, toDate);
-    console.log("res", res);
 
     navigate(
       {
@@ -198,7 +191,7 @@ const Hero = () => {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => handleTabChange(tab.id)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   activeTab === tab.id
                     ? "bg-white text-gray-900"
@@ -389,7 +382,7 @@ const Hero = () => {
                       <option value="">เลือกประเภทรถ</option>
                       {vehicleTypes.map((type) => (
                         <option key={type.Id} value={type.Id}>
-                          {type.name}
+                          {type.Name}
                         </option>
                       ))}
                     </select>

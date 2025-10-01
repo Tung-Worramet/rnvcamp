@@ -8,11 +8,14 @@ import FloorPlan from "@/components/campervan/FloorPlan";
 import Amenities from "@/components/campervan/Amenities";
 import HeroImageGallery from "@/components/campervan/HeroImageGallery";
 import TitleAndPrice from "@/components/campervan/TitleAndPrice";
+import VehicleInfo from "@/components/campervan/VehicleInfo";
+import BookingCard from "@/components/campervan/BookingCard";
 
 const CampervanDetail = () => {
   const { id } = useParams();
 
   const [campervanData, setCampervanData] = useState();
+  console.log("campervanData", campervanData);
 
   useEffect(() => {
     (async () => {
@@ -26,8 +29,9 @@ const CampervanDetail = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <TitleAndPrice campervanData={campervanData} />
         <HeroImageGallery campervanData={campervanData} />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-[180px]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:mt-[180px] mt-[100px]">
           <div className="lg:col-span-2 space-y-8">
+            <VehicleInfo campervanData={campervanData} />
             <Separator />
             <VehicleSpecification campervanData={campervanData} />
             <Separator />
@@ -37,6 +41,9 @@ const CampervanDetail = () => {
             <Separator />
             <Amenities campervanData={campervanData} />
             {/* <Separator /> */}
+          </div>
+          <div className="lg:col-span-1">
+            <BookingCard campervanData={campervanData} />
           </div>
         </div>
       </div>

@@ -15,6 +15,8 @@ import CampervanDetail from "@/pages/managetrip/CampervanDetail";
 import Campsite from "@/pages/managetrip/Campsite";
 import CampsiteDetail from "@/pages/managetrip/CampsiteDetail";
 import PartnerRegistration from "@/pages/partner/PartnerRegistration";
+import LayoutAdmin from "@/layouts/LayoutAdmin";
+import Cars from "@/pages/admin/cars";
 
 const router = createBrowserRouter([
   {
@@ -50,12 +52,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    // element: <ProtectRouteAdmin element={<LayoutAdmin />} />,
+    element: <LayoutAdmin />,
     children: [
       // { index: true, element: <Dashboard /> },
       //   { index: true, element: <Categories /> },
       //   { path: "productModels", element: <ProductModels /> },
-      //   { path: "cars", element: <Cars /> },
+      { path: "cars", element: <Cars /> },
       //   { path: "products", element: <Products /> },
       //   { path: "documents", element: <Documents /> },
       //   { path: "users", element: <Users /> },

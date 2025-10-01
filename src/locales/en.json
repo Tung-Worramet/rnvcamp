@@ -57,6 +57,16 @@
       "success_desc": "Your account has been created."
     }
   },
+  "managetrip": {
+    "title": "Plan Your Adventure",
+    "campervan": "Campervan",
+    "campervan_desc": "Perfect campervan for your journey!",
+    "campsite": "Campsite",
+    "campsite_desc": "Find the perfect spot to park and camp",
+    "vanAndCamp": "Campervan and Campsite",
+    "vanAndCamp_desc": "Plan your ultimate road trip with ease",
+    "booknow": "Book Now"
+  },
   "contact": {
     "hero": {
       "title": "Get in Touch with Us",
@@ -113,6 +123,12 @@
     },
     "location": {
       "title": "Find Us Here"
+    }
+  },
+  "footer": {
+    "mainmenu": {
+      "title": "Main Menu",
+      "home": "Home"
     }
   }
 }

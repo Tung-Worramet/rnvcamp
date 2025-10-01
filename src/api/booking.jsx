@@ -6,3 +6,16 @@ export const getPickupPoint = async () => {
   );
   return res.data;
 };
+
+export const createBooking = async (token, form) => {
+  const res = await axios.post(
+    `${import.meta.env.VITE_API_URL}/booking/createbooking`,
+    form,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return res.data;
+};

@@ -36,7 +36,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-luxury-dark border-t border-luxury-charcoal">
-      <div className="container py-12 md:py-16">
+      <div className="container py-8 md:py-10">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Main Menu */}
           <div className="space-y-4">
@@ -100,16 +100,16 @@ const Footer = () => {
             </div>
             <ul className="space-y-3">
               <li>
-                <a href="/partner-registration">
-                  <Button
-                    variant="ghost"
-                    className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
-                  >
-                    Partner Registration
-                  </Button>
+                <a
+                  href="/partner-registration"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm"
+                >
+                  Partner Registration
                 </a>
               </li>
-              <li>
+
+              {/* Partner Login */}
+              {/* <li>
                 <Button
                   onClick={handlePartnerLogin}
                   variant="ghost"
@@ -117,11 +117,11 @@ const Footer = () => {
                 >
                   Partner Login
                 </Button>
-              </li>
+              </li> */}
             </ul>
 
             {/* For Admins */}
-            <div className="pt-6 border-t border-luxury-charcoal">
+            {/* <div className="pt-6 border-t border-luxury-charcoal">
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="h-4 w-4 text-luxury-silver" />
                 <h4 className="text-sm font-medium text-luxury-pearl">
@@ -139,7 +139,7 @@ const Footer = () => {
                   </Button>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </div>
 
           {/* General Info */}
@@ -222,7 +222,7 @@ const Footer = () => {
             </div>
 
             {/* Newsletter Subscription */}
-            <div className="pt-6 border-t border-luxury-charcoal">
+            {/* <div className="pt-6 border-t border-luxury-charcoal">
               <h4 className="text-sm font-medium text-luxury-pearl mb-4">
                 Newsletter
               </h4>
@@ -248,7 +248,7 @@ const Footer = () => {
                   </Button>
                 </div>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
 

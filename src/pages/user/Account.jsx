@@ -2,10 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import useAuthStore from "@/store/authStore";
 import { useCallback, useEffect, useState } from "react";
-import EditProfileModal from "./modal/EditProfileModal";
+import EditProfileModal from "../../components/user/modal/EditProfileModal";
 import { getUserDetailById, updatePassword, updateUser } from "@/api/user";
 import { useToast } from "@/hooks/use-toast";
-import ChangePasswordModal from "./modal/ChangePasswordModal";
+import ChangePasswordModal from "../../components/user/modal/ChangePasswordModal";
 import { uploadDrivingLicenseFile, uploadIdCardFile } from "@/api/file";
 
 const Account = () => {
@@ -26,8 +26,6 @@ const Account = () => {
 
   const [idCardPreview, setIdCardPreview] = useState(null);
   const [licensePreview, setLicensePreview] = useState(null);
-
-  console.log("user", user);
 
   // ฟังก์ชันโหลดข้อมูลผู้ใช้ (เอาไปใช้ซ้ำหลังจาก save)
   const fetchUser = useCallback(async () => {

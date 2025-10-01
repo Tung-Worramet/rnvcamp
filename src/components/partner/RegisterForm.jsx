@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MapPin, Upload, Send, X } from "lucide-react";
-// import { InteractiveMap } from "./InteractiveMap";
+import InteractiveMap from "@/components/partner/InteractiveMap";
 
 const RegisterForm = () => {
   const [accommodationTypes, setAccommodationTypes] = useState([]);
@@ -616,10 +616,10 @@ const RegisterForm = () => {
             <p className="text-sm text-gray-600">
               กรุณาลากหมุดบนแผนที่เพื่อระบุตำแหน่งที่ตั้งที่พักของคุณ
             </p>
-            {/* <InteractiveMap
+            <InteractiveMap
               coordinates={coordinates}
               onCoordinatesChange={setCoordinates}
-            /> */}
+            />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="latitude">ละติจูด</Label>

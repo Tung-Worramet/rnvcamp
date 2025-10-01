@@ -1,34 +1,38 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useI18n } from "@/store/i18n";
 
 const ManageTrip = () => {
+  const t = useI18n((s) => s.t);
+  useI18n((s) => s.lang);
+
   return (
     <div className="min-h-[70vh] flex flex-col">
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8">
           <h1 className="mb-8 text-center text-3xl font-bold">
-            Plan Your Adventure
+            {t("managetrip.title")}
           </h1>
           <div className="grid gap-8 md:grid-cols-3">
             {[
               {
-                title: "Campervan",
+                title: `${t("managetrip.campervan")}`,
                 image: "/images/signup.png",
                 link: "/campervan",
-                description: "Perfect campervan for your journey!",
+                description: `${t("managetrip.campervan_desc")}`,
               },
               {
-                title: "Campsite",
+                title: `${t("managetrip.campsite")}`,
                 image: "/images/campSite.png",
                 link: "/campsite",
-                description: "Find the perfect spot to park and camp",
+                description: `${t("managetrip.campsite_desc")}`,
               },
               {
-                title: "Campervan and Campsite",
+                title: `${t("managetrip.vanAndCamp")}`,
                 image: "/images/vanAndCamp.png",
                 link: "/book-motorhome",
-                description: "Plan your ultimate road trip with ease",
+                description: `${t("managetrip.vanAndCamp_desc")}`,
               },
             ].map((item, index) => (
               <Card key={index} className="group overflow-hidden">
@@ -45,7 +49,9 @@ const ManageTrip = () => {
                     <p className="mb-4 text-muted-foreground">
                       {item.description}
                     </p>
-                    <Button className="w-full">Book Now</Button>
+                    <Button className="w-full">
+                      {t("managetrip.booknow")}
+                    </Button>
                   </CardContent>
                 </Link>
               </Card>
